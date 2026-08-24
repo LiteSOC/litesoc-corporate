@@ -1,0 +1,53 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { company, products } from '../data/site';
+
+const lastUpdated = new Date().toISOString().slice(0, 10);
+---
+
+<LegalLayout
+  title="Security | Litesoc Sdn Bhd"
+  heading="Reporting a security issue"
+  eyebrow="Corporate"
+  description="How to report a suspected security vulnerability to Litesoc Sdn Bhd."
+  lastUpdated={lastUpdated}
+>
+  <h2>Reporting a vulnerability</h2>
+  <p>
+    If you believe you have found a security vulnerability in this website or in one of our
+    products, please report it to{' '}
+    <a href={`mailto:${company.email}`}>{company.email}</a>. Include enough detail for us to
+    reproduce the issue &mdash; the affected URL or component, the steps you took, and what you
+    observed.
+  </p>
+
+  <h2>What to expect</h2>
+  <p>
+    We will acknowledge your report and keep you informed while we investigate. We ask that you give
+    us a reasonable opportunity to address the issue before disclosing it publicly.
+  </p>
+
+  <h2>Please avoid</h2>
+  <ul>
+    <li>Accessing, modifying or deleting data that does not belong to you.</li>
+    <li>Testing that degrades service availability for others.</li>
+    <li>Social engineering, phishing or physical attacks against our staff or users.</li>
+  </ul>
+
+  <h2>Product security</h2>
+  <p>
+    Each product maintains its own security contacts and documentation:
+  </p>
+  <ul>
+    {
+      products.map((product) => (
+        <li>
+          {product.name} &mdash;{' '}
+          <a href={product.url} target="_blank" rel="noopener noreferrer">
+            {product.domain}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</LegalLayout>

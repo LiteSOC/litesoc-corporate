@@ -1,0 +1,262 @@
+---
+import { company, products, accentClasses } from '../data/site';
+
+interface Props {
+  /** `compact` is the hero lockup; `full` is the ecosystem section. */
+  variant?: 'compact' | 'full';
+  /** Heading id this tree is labelled by, when one exists. */
+  labelledby?: string;
+}
+
+const { variant = 'compact', labelledby } = Astro.props;
+const isFull = variant === 'full';
+---
+
+{/*
+  Corporate structure, drawn as hairline rules rather than an image.
+
+  The same component renders the hero lockup and the ecosystem section so the
+  hierarchy is expressed once. Connectors are decorative; the underlying markup
+  is a plain list, which is what assistive technology reads.
+*/}
+<div class="tree" data-variant={variant} aria-labelledby={labelledby}>
+  <div class="tree-root">
+    <div class={`node node-root ${isFull ? 'node-lg' : ''}`}>
+      <span aria-hidden="true" class="node-rule bg-ink"></span>
+      <p class="node-name">{company.legalName}</p>
+      <p class="eyebrow mt-1.5">Company</p>
+    </div>
+  </div>
+
+  <div class="tree-connector" aria-hidden="true"></div>
+
+  <ul class="tree-children">
+    {
+      products.map((product) => {
+        const accent = accentClasses[product.accent];
+        return (
+          <li class="tree-child">
+            <div class={`node ${isFull ? 'node-lg' : ''}`}>
+              <span aria-hidden="true" class={`node-rule ${accent.rule}`} />
+              <p class="node-name">{product.name}</p>
+              <p class="eyebrow mt-1.5">{product.category}</p>
+              <div class="node-foot">
+                {isFull ? (
+                <a
+                  href={product.url}
+                  class={`inline-flex items-center gap-1.5 py-1.5 font-mono text-xs ${accent.text} underline decoration-current/30 underline-offset-4 hover:decoration-current`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {product.domain}
+                  <span class="sr-only">
+                    — visit the {product.name} website (opens in a new tab)
+                  </span>
+                  <svg
+                    class="h-3 w-3"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.25"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 2.5h5.5V8M9.5 2.5L2.5 9.5" />
+                  </svg>
+                </a>
+                ) : (
+                  <p class="font-mono text-[0.6875rem] text-slate-400">{product.domain}</p>
+                )}
+              </div>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .tree {
+    --trunk-x: 1.25rem;
+    --elbow: 1.25rem;
+    --stem: 1.5rem;
+    --gap: 1rem;
+    position: relative;
+  }
+
+  .tree[data-variant='full'] {
+    --stem: 2rem;
+    --gap: 1.25rem;
+  }
+
+  .node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 2px;
+    background-color: var(--color-paper);
+    padding: 1.125rem 1.25rem 1.25rem;
+  }
+
+  .node-lg {
+    padding: 1.5rem 1.5rem 1.625rem;
+  }
+
+  .node-rule {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 2px;
+  }
+
+  .node-root {
+    border-color: var(--color-line-strong);
+  }
+
+  .node-name {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+
+  .tree[data-variant='full'] .node-name {
+    font-size: 1.125rem;
+  }
+
+  .tree-children {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    padding-left: calc(var(--trunk-x) + var(--elbow));
+    list-style: none;
+    margin: 0;
+  }
+
+  .tree-child {
+    position: relative;
+    display: flex;
+  }
+
+  /* Grid rows stretch the list item; make the card fill it so both products
+     line up regardless of how many lines the category label takes. */
+  .tree-child > .node {
+    flex: 1;
+  }
+
+  /* Domains sit on a shared baseline at the foot of each card. */
+  .node-foot {
+    margin-top: auto;
+    padding-top: 0.875rem;
+  }
+
+  .tree[data-variant='full'] .node-foot {
+    padding-top: 1.25rem;
+  }
+
+  /* --- Mobile: a left-hand trunk with an elbow into each product. --------- */
+
+  .tree-connector {
+    position: relative;
+    height: var(--stem);
+  }
+
+  .tree-connector::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--trunk-x);
+    width: 1px;
+    background-color: var(--color-line-strong);
+  }
+
+  /* One continuous trunk: every child contributes the segment beside it, and
+     the last child's stops at its own elbow so the line does not overshoot. */
+  .tree-child::after {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--elbow));
+    top: calc(-1 * var(--gap));
+    bottom: 0;
+    width: 1px;
+    background-color: var(--color-line-strong);
+  }
+
+  .tree-child:last-child::after {
+    bottom: auto;
+    height: calc(var(--gap) + 2.25rem);
+  }
+
+  .tree-child::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--elbow));
+    top: 2.25rem;
+    width: var(--elbow);
+    height: 1px;
+    background-color: var(--color-line-strong);
+  }
+
+  /* --- Wide: a centred trunk that branches into two products. ------------ */
+
+  @media (min-width: 40rem) {
+    .tree-root {
+      display: flex;
+      justify-content: center;
+    }
+
+    .tree-root .node {
+      width: min(22rem, 100%);
+      text-align: center;
+    }
+
+    .tree-connector {
+      height: calc(var(--stem) * 2);
+    }
+
+    /* Stem down from the company node. */
+    .tree-connector::before {
+      left: 50%;
+      right: auto;
+      top: 0;
+      bottom: 50%;
+      width: 1px;
+    }
+
+    /* Horizontal branch spanning the two product columns' centres. */
+    .tree-connector::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: calc(25% - var(--gap) / 4);
+      right: calc(25% - var(--gap) / 4);
+      height: 1px;
+      background-color: var(--color-line-strong);
+    }
+
+    .tree-children {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gap);
+      padding-left: 0;
+    }
+
+    .tree-child::before {
+      display: none;
+    }
+
+    /* Both selectors, so the mobile :last-child override is reset too. */
+    .tree-child::after,
+    .tree-child:last-child::after {
+      left: 50%;
+      top: calc(-1 * var(--stem));
+      bottom: auto;
+      height: var(--stem);
+      width: 1px;
+    }
+  }
+</style>

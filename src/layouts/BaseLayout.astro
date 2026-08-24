@@ -1,0 +1,180 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { company, products } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set on pages that should not be indexed. */
+  noindex?: boolean;
+  /** Emit the Organization graph. Homepage only. */
+  structuredData?: boolean;
+}
+
+const { title, description, noindex = false, structuredData = false } = Astro.props;
+
+/*
+  GitHub Pages serves directory pages at a trailing slash and redirects the
+  slashless form to it, and @astrojs/sitemap emits the same shape. Astro's
+  directory build format already gives us that pathname, so use it verbatim
+  and every URL we publish agrees.
+*/
+const canonical = new URL(Astro.url.pathname, Astro.site ?? company.url).href;
+const ogImage = new URL('/images/og-litesoc-sdn-bhd.png', Astro.site ?? company.url).href;
+
+/**
+ * Organization graph.
+ *
+ * `owns` + `subOrganization`-free modelling is deliberate: LiteSOC and
+ * Digital Khairat are products, not subsidiaries. Each is described as a
+ * SoftwareApplication owned and published by Litesoc Sdn Bhd.
+ */
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${company.url}/#organization`,
+      name: company.legalName,
+      legalName: company.legalName,
+      alternateName: company.shortName,
+      url: company.url,
+      description: company.description,
+      email: company.email,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${company.url}/images/litesoc-company-logo.png`,
+        width: 512,
+        height: 512,
+      },
+      image: `${company.url}/images/litesoc-company-logo.png`,
+      duns: company.duns,
+      identifier: {
+        '@type': 'PropertyValue',
+        name: 'Companies Commission of Malaysia (SSM) registration number',
+        value: company.registrationNo,
+      },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: company.address.street,
+        addressLocality: company.address.locality,
+        addressRegion: company.address.region,
+        postalCode: company.address.postalCode,
+        addressCountry: company.countryCode,
+      },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'general enquiries',
+          email: company.email,
+          areaServed: company.countryCode,
+          availableLanguage: ['en', 'ms'],
+        },
+      ],
+      owns: products.map((product) => ({
+        '@type': 'SoftwareApplication',
+        '@id': `${product.url}/#software`,
+        name: product.name,
+        url: product.url,
+        applicationCategory: product.category,
+        description: product.description,
+        publisher: { '@id': `${company.url}/#organization` },
+      })),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${company.url}/#website`,
+      url: company.url,
+      name: company.legalName,
+      description: company.description,
+      inLanguage: 'en',
+      publisher: { '@id': `${company.url}/#organization` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { '@id': `${company.url}/#website` },
+      about: { '@id': `${company.url}/#organization` },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {!noindex && <link rel="canonical" href={canonical} />}
+
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#191760" />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/images/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="icon" href="/images/icon-512.png" type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-sans-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={company.legalName} />
+    <meta property="og:locale" content="en_MY" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${company.legalName} — ${company.tagline}`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={`${company.legalName} — ${company.tagline}`} />
+
+    {
+      structuredData && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(organizationSchema)}
+        />
+      )
+    }
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-sm focus:bg-ink focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-paper"
+    >
+      Skip to main content
+    </a>
+
+    <Header />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

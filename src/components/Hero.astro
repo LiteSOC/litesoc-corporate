@@ -1,0 +1,55 @@
+---
+import StructureTree from './StructureTree.astro';
+import { company } from '../data/site';
+---
+
+<section class="hero relative overflow-hidden border-b border-line">
+  <div class="container-x relative">
+    <div class="grid gap-14 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16 lg:py-28">
+      <div class="lg:col-span-7 lg:pt-4">
+        <p class="eyebrow">Technology company &middot; {company.country}</p>
+
+        <h1
+          class="mt-6 text-[clamp(2.125rem,1.2rem+3.9vw,3.75rem)] leading-[1.05] font-semibold tracking-[-0.03em] text-ink"
+        >
+          {company.tagline}
+        </h1>
+
+        <p class="mt-7 max-w-[38rem] text-[1.0625rem] leading-relaxed text-slate sm:text-lg">
+          {company.legalName} builds secure and practical digital products that help organizations
+          operate better, serve their communities, and move forward with confidence.
+        </p>
+
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a href="/#products" class="btn btn-primary">Explore Our Products</a>
+          <a href="/#about" class="btn btn-secondary">About Litesoc</a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="rounded-sm border border-line bg-mist p-5 sm:p-7">
+          <p class="eyebrow mb-6">Corporate structure</p>
+          <StructureTree variant="compact" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* A faint engineered grid — one gradient, no imagery, no layout cost. */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--color-line) 0 1px,
+      transparent 1px 6rem
+    );
+    opacity: 0.45;
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent 78%);
+    mask-image: linear-gradient(to bottom, black, transparent 78%);
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { company, products } from '../data/site';
+
+/*
+  Scope note: this page describes only litesoc.app, the corporate website.
+  It deliberately makes no claims about the products, which publish their own
+  notices. Every statement here is verifiable against how this site is built.
+*/
+const lastUpdated = new Date().toISOString().slice(0, 10);
+---
+
+<LegalLayout
+  title="Privacy | Litesoc Sdn Bhd"
+  heading="Privacy on this website"
+  eyebrow="Corporate"
+  description="How litesoc.app, the corporate website of Litesoc Sdn Bhd, handles visitor information."
+  lastUpdated={lastUpdated}
+>
+  <h2>Scope</h2>
+  <p>
+    This notice covers <strong>litesoc.app</strong>, the corporate website of {company.legalName}.
+    It does not cover the products listed below, which operate separately and publish their own
+    terms and privacy information on their own sites.
+  </p>
+  <ul>
+    {
+      products.map((product) => (
+        <li>
+          {product.name} &mdash;{' '}
+          <a href={product.url} target="_blank" rel="noopener noreferrer">
+            {product.domain}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>What this site collects</h2>
+  <p>
+    This website is a static site. It contains no contact forms, no accounts, no analytics scripts,
+    no advertising scripts and no third-party trackers. It does not set cookies, and it does not ask
+    you for personal information.
+  </p>
+
+  <h2>Hosting</h2>
+  <p>
+    The site is served as static files by GitHub Pages. Like any web host, the hosting provider
+    processes standard technical request data such as IP addresses in order to deliver pages and
+    protect the service. That processing is governed by GitHub&rsquo;s own privacy practices, not by
+    this site.
+  </p>
+
+  <h2>Email</h2>
+  <p>
+    If you email <a href={`mailto:${company.email}`}>{company.email}</a>, we receive the contents of
+    your message and your email address, and use them only to respond to your enquiry.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    If this website changes in a way that affects the statements above, this page will be updated at
+    the same time.
+  </p>
+
+  <h2>Questions</h2>
+  <p>
+    Contact <a href={`mailto:${company.email}`}>{company.email}</a>.
+  </p>
+</LegalLayout>

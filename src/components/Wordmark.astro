@@ -1,0 +1,40 @@
+---
+import { company } from '../data/site';
+
+interface Props {
+  /** `light` renders for dark surfaces. */
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { tone = 'dark', class: className = '' } = Astro.props;
+
+const nameTone = tone === 'light' ? 'text-paper' : 'text-ink';
+const suffixTone = tone === 'light' ? 'text-paper/55' : 'text-slate-400';
+
+// Intrinsic ratio of the trimmed mark (582 × 611), scaled to a 36px cap
+// height and set explicitly so the header never shifts while it loads.
+const LOGO_W = 34;
+const LOGO_H = 36;
+---
+
+<span class={`inline-flex items-center gap-3 ${className}`}>
+  <img
+    src="/images/litesoc-company-logo-144.png"
+    width={LOGO_W}
+    height={LOGO_H}
+    alt=""
+    decoding="async"
+    class="block h-9 w-auto"
+  />
+  <span class="flex flex-col leading-none">
+    <span class={`text-[1.0625rem] font-semibold tracking-[-0.02em] ${nameTone}`}>
+      {company.shortName}
+    </span>
+    <span
+      class={`mt-1 font-mono text-[0.5625rem] font-medium tracking-[0.22em] uppercase ${suffixTone}`}
+    >
+      {company.suffix}
+    </span>
+  </span>
+</span>

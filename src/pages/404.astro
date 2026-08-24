@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found | Litesoc Sdn Bhd"
+  description="The page you requested could not be found on litesoc.app."
+  noindex
+>
+  <section class="container-x py-28 sm:py-36">
+    <p class="eyebrow">Error 404</p>
+    <h1 class="rule-heading mt-5 text-ink">This page could not be found.</h1>
+    <p class="mt-5 max-w-[34rem] text-[1.0625rem] leading-relaxed text-slate">
+      The address may be mistyped, or the page may have moved.
+    </p>
+    <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+      <a href="/" class="btn btn-primary">Back to home</a>
+      <a href="/#products" class="btn btn-secondary">View our products</a>
+    </div>
+  </section>
+</BaseLayout>

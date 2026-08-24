@@ -1,0 +1,25 @@
+---
+import StructureTree from './StructureTree.astro';
+import { company } from '../data/site';
+---
+
+<section class="border-b border-line py-20 sm:py-24 lg:py-28">
+  <div class="container-x">
+    <div class="max-w-[46rem]">
+      <p class="eyebrow">Product ecosystem</p>
+      <h2 id="ecosystem-heading" class="rule-heading mt-5 text-ink">
+        Two products, one company
+      </h2>
+      <p class="mt-5 text-[1.0625rem] leading-relaxed text-slate sm:text-lg">
+        {company.legalName} owns and develops both platforms. They serve different sectors and are
+        branded independently, with shared engineering standards behind them.
+      </p>
+    </div>
+
+    <div class="mt-14 lg:mt-16">
+      <div class="mx-auto max-w-4xl">
+        <StructureTree variant="full" labelledby="ecosystem-heading" />
+      </div>
+    </div>
+  </div>
+</section>

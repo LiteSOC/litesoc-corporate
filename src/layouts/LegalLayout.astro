@@ -1,0 +1,66 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  heading: string;
+  eyebrow: string;
+  description: string;
+  lastUpdated: string;
+}
+
+const { title, heading, eyebrow, description, lastUpdated } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container-x py-20 sm:py-24">
+    <header class="max-w-[46rem]">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 class="rule-heading mt-5 text-ink">{heading}</h1>
+      <p class="mt-5 font-mono text-xs text-slate-400">Last updated: {lastUpdated}</p>
+    </header>
+
+    <div class="prose-legal mt-12 max-w-[42rem]">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .prose-legal h2 {
+    margin-top: 2.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+
+  .prose-legal h2:first-child {
+    margin-top: 0;
+  }
+
+  .prose-legal p,
+  .prose-legal li {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: var(--color-slate);
+  }
+
+  .prose-legal ul {
+    margin-top: 0.5rem;
+    padding-left: 1.125rem;
+    list-style: disc;
+  }
+
+  .prose-legal a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--color-line-strong);
+  }
+
+  .prose-legal a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+</style>

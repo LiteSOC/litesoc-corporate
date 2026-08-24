@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Products from '../components/Products.astro';
+import Principles from '../components/Principles.astro';
+import Ecosystem from '../components/Ecosystem.astro';
+import Contact from '../components/Contact.astro';
+import { company } from '../data/site';
+---
+
+<BaseLayout
+  title="Litesoc Sdn Bhd | Technology Built for Real-World Impact"
+  description={company.description}
+  structuredData
+>
+  <Hero />
+  <About />
+  <Products />
+  <Principles />
+  <Ecosystem />
+  <Contact />
+</BaseLayout>

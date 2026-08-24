@@ -1,0 +1,26 @@
+{
+  "name": "litesoc-corporate",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Corporate website for Litesoc Sdn Bhd — the technology company behind LiteSOC and Digital Khairat.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "build:ci": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.4",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.9.3"
+  }
+}

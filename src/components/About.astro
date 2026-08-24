@@ -1,0 +1,58 @@
+---
+const concepts = [
+  {
+    title: 'Secure-by-design technology',
+    body: 'Security requirements are part of how a product is scoped, not a layer added at the end.',
+  },
+  {
+    title: 'Practical digital transformation',
+    body: 'We replace manual, fragmented processes with software that fits the way an organization already works.',
+  },
+  {
+    title: 'Long-term product development',
+    body: 'Each platform is maintained as a product with a roadmap, not delivered once and left behind.',
+  },
+];
+---
+
+<section id="about" class="scroll-mt-24 border-b border-line py-20 sm:py-24 lg:py-28">
+  <div class="container-x">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+        <p class="eyebrow">The company</p>
+        <h2 class="rule-heading mt-5 text-ink">About Litesoc</h2>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="max-w-[42rem] space-y-6 text-[1.0625rem] leading-relaxed text-slate">
+          <p>
+            Litesoc Sdn Bhd is a Malaysian technology company that develops digital products for
+            practical organizational and community needs. We work on problems that are ordinary but
+            consequential &mdash; keeping systems monitored, keeping records accurate, keeping
+            members informed.
+          </p>
+          <p>
+            Our products serve different audiences and are built independently, but they share the
+            same engineering standards: secure defaults, clear interfaces, and software designed
+            around real operational workflows rather than assumptions about them.
+          </p>
+        </div>
+
+        <ul class="mt-12 grid gap-px border-y border-line bg-line sm:mt-14">
+          {
+            concepts.map((concept) => (
+              <li class="bg-paper py-6">
+                <h3 class="text-base font-semibold tracking-[-0.01em] text-ink">
+                  {concept.title}
+                </h3>
+                <p class="mt-2 max-w-[38rem] text-[0.9375rem] leading-relaxed text-slate">
+                  {concept.body}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

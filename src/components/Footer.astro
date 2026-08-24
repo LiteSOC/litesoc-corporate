@@ -1,0 +1,101 @@
+---
+import Wordmark from './Wordmark.astro';
+import { company, products, nav } from '../data/site';
+
+// Resolved at build time — a rebuild rolls the year over.
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line bg-paper">
+  <div class="container-x">
+    <div class="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:py-20">
+      <div class="lg:col-span-5">
+        <Wordmark />
+        <p class="mt-6 max-w-[24rem] text-[0.9375rem] leading-relaxed text-slate">
+          A Malaysian {company.descriptor} &mdash; the company behind LiteSOC and Digital Khairat.
+        </p>
+        <a
+          href={`mailto:${company.email}`}
+          class="mt-4 inline-block py-1.5 text-[0.9375rem] font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink"
+        >
+          {company.email}
+        </a>
+
+        <address class="mt-7 text-[0.8125rem] leading-relaxed text-slate-400 not-italic">
+          {company.address.lines.map((line) => <span class="block">{line}</span>)}
+        </address>
+      </div>
+
+      <nav aria-labelledby="footer-company" class="lg:col-span-3">
+        <h2 id="footer-company" class="eyebrow">Company</h2>
+        <ul class="mt-3 space-y-0.5">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="inline-block py-1.5 text-[0.9375rem] text-slate transition-colors hover:text-ink"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-products" class="lg:col-span-4">
+        <h2 id="footer-products" class="eyebrow">Products</h2>
+        <ul class="mt-3 space-y-0.5">
+          {
+            products.map((product) => (
+              <li>
+                <a
+                  href={product.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group inline-flex items-baseline gap-2.5 py-1.5 text-[0.9375rem] text-slate transition-colors hover:text-ink"
+                >
+                  <span>{product.name}</span>
+                  <span class="font-mono text-[0.6875rem] text-slate-400">{product.domain}</span>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div
+      class="flex flex-col gap-4 border-t border-line py-7 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <div class="space-y-1.5">
+        <p class="text-[0.8125rem] text-slate-400">
+          &copy; {year} {company.legalName}. All rights reserved.
+        </p>
+        <p class="font-mono text-[0.6875rem] text-slate-400">
+          Co. Reg. No. {company.registrationNo}
+        </p>
+      </div>
+      <ul class="flex items-center gap-6">
+        <li>
+          <a
+            href="/privacy/"
+            class="inline-block py-2 text-[0.8125rem] text-slate-400 transition-colors hover:text-ink"
+          >
+            Privacy
+          </a>
+        </li>
+        <li>
+          <a
+            href="/security/"
+            class="inline-block py-2 text-[0.8125rem] text-slate-400 transition-colors hover:text-ink"
+          >
+            Security
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
