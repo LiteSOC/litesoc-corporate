@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { company, products } from '../data/site';
+import { capabilities, company, products, services } from '../data/site';
 
 interface Props {
   title: string;
@@ -73,6 +73,7 @@ const organizationSchema = {
           availableLanguage: ['en', 'ms'],
         },
       ],
+      knowsAbout: [...capabilities],
       owns: products.map((product) => ({
         '@type': 'SoftwareApplication',
         '@id': `${product.url}/#software`,
@@ -82,6 +83,22 @@ const organizationSchema = {
         description: product.description,
         publisher: { '@id': `${company.url}/#organization` },
       })),
+      /*
+        Services the company delivers. Name, description and provider only:
+        no pricing, ratings, review counts or service areas are asserted,
+        because none of those are documented.
+      */
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Technology services',
+        itemListElement: services.map((service) => ({
+          '@type': 'Service',
+          name: service.name,
+          serviceType: service.name,
+          description: service.description,
+          provider: { '@id': `${company.url}/#organization` },
+        })),
+      },
     },
     {
       '@type': 'WebSite',

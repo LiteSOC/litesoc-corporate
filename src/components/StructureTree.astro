@@ -1,8 +1,8 @@
 ---
-import { company, products, accentClasses } from '../data/site';
+import { company, products, services, accentClasses } from '../data/site';
 
 interface Props {
-  /** `compact` is the hero lockup; `full` is the ecosystem section. */
+  /** `compact` is the hero lockup; `full` is the company structure section. */
   variant?: 'compact' | 'full';
   /** Heading id this tree is labelled by, when one exists. */
   labelledby?: string;
@@ -15,9 +15,12 @@ const isFull = variant === 'full';
 {/*
   Corporate structure, drawn as hairline rules rather than an image.
 
-  The same component renders the hero lockup and the ecosystem section so the
-  hierarchy is expressed once. Connectors are decorative; the underlying markup
-  is a plain list, which is what assistive technology reads.
+  The company has two branches: products it owns, and services it delivers.
+  Product accent colours appear only on product items, so colour continues to
+  mark provenance. The same component renders the hero lockup and the
+  structure section, so the hierarchy is expressed once. Connectors are
+  decorative; the underlying markup is nested lists, which is what assistive
+  technology reads.
 */}
 <div class="tree" data-variant={variant} aria-labelledby={labelledby}>
   <div class="tree-root">
@@ -31,47 +34,75 @@ const isFull = variant === 'full';
   <div class="tree-connector" aria-hidden="true"></div>
 
   <ul class="tree-children">
-    {
-      products.map((product) => {
-        const accent = accentClasses[product.accent];
-        return (
-          <li class="tree-child">
-            <div class={`node ${isFull ? 'node-lg' : ''}`}>
-              <span aria-hidden="true" class={`node-rule ${accent.rule}`} />
-              <p class="node-name">{product.name}</p>
-              <p class="eyebrow mt-1.5">{product.category}</p>
-              <div class="node-foot">
-                {isFull ? (
-                <a
-                  href={product.url}
-                  class={`inline-flex items-center gap-1.5 py-1.5 font-mono text-xs ${accent.text} underline decoration-current/30 underline-offset-4 hover:decoration-current`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {product.domain}
-                  <span class="sr-only">
-                    — visit the {product.name} website (opens in a new tab)
+    <li class="tree-child">
+      <div class={`node ${isFull ? 'node-lg' : ''}`}>
+        <span aria-hidden="true" class="node-rule bg-ink"></span>
+        <p class="node-name">Products</p>
+        <p class="eyebrow mt-1.5">Owned and developed</p>
+
+        <ul class="branch-items">
+          {
+            products.map((product) => {
+              const accent = accentClasses[product.accent];
+              return (
+                <li class="branch-item">
+                  <span aria-hidden="true" class={`branch-mark ${accent.rule}`} />
+                  <span class="branch-body">
+                    <span class="branch-name">{product.name}</span>
+                    {isFull ? (
+                      <a
+                        href={product.url}
+                        class={`branch-link ${accent.text}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {product.domain}
+                        <span class="sr-only">
+                          — visit the {product.name} website (opens in a new tab)
+                        </span>
+                        <svg
+                          class="h-3 w-3"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.25"
+                          aria-hidden="true"
+                        >
+                          <path d="M4 2.5h5.5V8M9.5 2.5L2.5 9.5" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <span class="branch-meta">{product.domain}</span>
+                    )}
                   </span>
-                  <svg
-                    class="h-3 w-3"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.25"
-                    aria-hidden="true"
-                  >
-                    <path d="M4 2.5h5.5V8M9.5 2.5L2.5 9.5" />
-                  </svg>
-                </a>
-                ) : (
-                  <p class="font-mono text-[0.6875rem] text-slate-400">{product.domain}</p>
-                )}
-              </div>
-            </div>
-          </li>
-        );
-      })
-    }
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </li>
+
+    <li class="tree-child">
+      <div class={`node ${isFull ? 'node-lg' : ''}`}>
+        <span aria-hidden="true" class="node-rule bg-ink"></span>
+        <p class="node-name">Services</p>
+        <p class="eyebrow mt-1.5">Delivered for clients</p>
+
+        <ul class="branch-items">
+          {
+            services.map((service) => (
+              <li class="branch-item">
+                <span aria-hidden="true" class="branch-mark bg-line-strong" />
+                <span class="branch-body">
+                  <span class="branch-name">{service.name}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </li>
   </ul>
 </div>
 
@@ -127,6 +158,75 @@ const isFull = variant === 'full';
     font-size: 1.125rem;
   }
 
+  /* --- Items inside a branch -------------------------------------------- */
+
+  .branch-items {
+    margin: 1rem 0 0;
+    padding: 0.875rem 0 0;
+    border-top: 1px solid var(--color-line);
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .tree[data-variant='full'] .branch-items {
+    margin-top: 1.25rem;
+    padding-top: 1.125rem;
+    gap: 0.875rem;
+  }
+
+  .branch-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .branch-mark {
+    margin-top: 0.5rem;
+    height: 2px;
+    width: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .branch-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  .branch-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+
+  .branch-meta {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-slate-400);
+  }
+
+  .branch-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding-block: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
+    text-underline-offset: 4px;
+  }
+
+  .branch-link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* --- Branch layout ----------------------------------------------------- */
+
   .tree-children {
     display: flex;
     flex-direction: column;
@@ -141,23 +241,13 @@ const isFull = variant === 'full';
     display: flex;
   }
 
-  /* Grid rows stretch the list item; make the card fill it so both products
-     line up regardless of how many lines the category label takes. */
+  /* Grid rows stretch the list item; make the card fill it so both branches
+     line up regardless of how many items each holds. */
   .tree-child > .node {
     flex: 1;
   }
 
-  /* Domains sit on a shared baseline at the foot of each card. */
-  .node-foot {
-    margin-top: auto;
-    padding-top: 0.875rem;
-  }
-
-  .tree[data-variant='full'] .node-foot {
-    padding-top: 1.25rem;
-  }
-
-  /* --- Mobile: a left-hand trunk with an elbow into each product. --------- */
+  /* --- Mobile: a left-hand trunk with an elbow into each branch. ---------- */
 
   .tree-connector {
     position: relative;
@@ -201,7 +291,7 @@ const isFull = variant === 'full';
     background-color: var(--color-line-strong);
   }
 
-  /* --- Wide: a centred trunk that branches into two products. ------------ */
+  /* --- Wide: a centred trunk that branches into two. --------------------- */
 
   @media (min-width: 40rem) {
     .tree-root {
@@ -227,7 +317,8 @@ const isFull = variant === 'full';
       width: 1px;
     }
 
-    /* Horizontal branch spanning the two product columns' centres. */
+    /* Horizontal branch spanning the two columns' centres. A 2-column grid
+       with gap g puts each centre at 25% - g/4 from its side, not a flat 25%. */
     .tree-connector::after {
       content: '';
       position: absolute;

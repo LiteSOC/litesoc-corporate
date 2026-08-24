@@ -34,8 +34,12 @@ export const company = {
   countryCode: 'MY',
   descriptor: 'technology company',
   tagline: 'Technology Built for Real-World Impact.',
+  /** Homepage meta description. */
   description:
-    'Litesoc Sdn Bhd is the technology company behind LiteSOC and Digital Khairat, building secure and practical digital platforms for organizations and communities.',
+    'Litesoc Sdn Bhd builds digital products and provides software development, cybersecurity, cloud, networking and infrastructure solutions in Malaysia.',
+  /** One-line positioning used in the hero and About section. */
+  positioning:
+    'Litesoc Sdn Bhd builds digital products and delivers technology, cybersecurity and infrastructure solutions.',
   /** Companies Commission of Malaysia (SSM) registration. */
   registrationNo: '202601014090 (1676188-K)',
   /** Dun & Bradstreet D-U-N-S Number. */
@@ -85,8 +89,104 @@ export const products: readonly Product[] = [
   browser still treats them as same-document navigation, so smooth scrolling
   is unaffected.
 */
+/**
+ * Professional services delivered by Litesoc Sdn Bhd.
+ *
+ * These are engagements the company performs for clients. They are kept
+ * separate from `products`, which the company owns and develops.
+ */
+export interface Service {
+  readonly name: string;
+  /** Key into the icon map in Services.astro. */
+  readonly icon: 'code' | 'shield' | 'network' | 'cloud' | 'server';
+  readonly description: string;
+  readonly capabilities: readonly string[];
+}
+
+export const services: readonly Service[] = [
+  {
+    name: 'Web & Software Development',
+    icon: 'code',
+    description:
+      'Custom websites, web applications, APIs and digital platforms designed around real business and operational requirements.',
+    capabilities: [
+      'Web applications',
+      'Custom software',
+      'API development',
+      'System integration',
+      'Responsive websites',
+    ],
+  },
+  {
+    name: 'Cybersecurity',
+    icon: 'shield',
+    description:
+      'Security services focused on identifying risk, improving resilience and embedding security throughout technology environments.',
+    capabilities: [
+      'Vulnerability assessment',
+      'Penetration testing',
+      'Security architecture',
+      'Application security',
+      'Security hardening',
+      'Secure-by-design review',
+    ],
+  },
+  {
+    name: 'Network & Infrastructure',
+    icon: 'network',
+    description:
+      'Design and implementation of secure, reliable and maintainable network and infrastructure environments.',
+    capabilities: [
+      'Network architecture',
+      'VLAN and segmentation',
+      'Firewall deployment',
+      'VPN',
+      'Wi-Fi infrastructure',
+      'Network security',
+    ],
+  },
+  {
+    name: 'Cloud & DevOps',
+    icon: 'cloud',
+    description:
+      'Modern application delivery and infrastructure services covering cloud deployment, automation, observability and CI/CD.',
+    capabilities: [
+      'Cloud infrastructure',
+      'CI/CD',
+      'Containerisation',
+      'Infrastructure automation',
+      'Monitoring and observability',
+      'Application deployment',
+    ],
+  },
+  {
+    name: 'Infrastructure Lab & Prototyping',
+    icon: 'server',
+    description:
+      'Private infrastructure environments for virtualization, testing, experimentation, proof-of-concept development and technology validation.',
+    capabilities: [
+      'Virtualization',
+      'Private cloud',
+      'Testing environments',
+      'Proof of concept',
+      'Infrastructure prototyping',
+    ],
+  },
+] as const;
+
+/** Short capability labels for the strip under the About section. */
+export const capabilities = [
+  'Software engineering',
+  'Cybersecurity',
+  'Cloud',
+  'Networking',
+  'Infrastructure',
+  'Product development',
+] as const;
+
 export const nav = [
   { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services' },
   { label: 'Products', href: '/#products' },
   { label: 'Contact', href: '/#contact' },
 ] as const;

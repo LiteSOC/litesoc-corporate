@@ -1,5 +1,5 @@
 ---
-import { company, products, accentClasses } from '../data/site';
+import { company, products, services, accentClasses } from '../data/site';
 ---
 
 <section id="contact" class="scroll-mt-24 bg-ink py-20 text-paper sm:py-24 lg:py-28">
@@ -9,6 +9,7 @@ import { company, products, accentClasses } from '../data/site';
         <p class="eyebrow text-paper/50">Contact</p>
         <h2 class="rule-heading mt-5 text-paper">Let&rsquo;s Connect</h2>
         <p class="mt-5 max-w-[34rem] text-[1.0625rem] leading-relaxed text-paper/70">
+          Have a technology project, security requirement or infrastructure challenge? Talk to us.
           For corporate, partnership, or general enquiries about {company.legalName}, email us
           directly. For questions about a specific platform, the product teams are reachable through
           their own sites.
@@ -99,6 +100,31 @@ import { company, products, accentClasses } from '../data/site';
             })
           }
         </ul>
+
+        <div class="mt-12">
+          <p class="eyebrow text-paper/50">Service enquiries</p>
+          <p class="mt-4 max-w-[30rem] text-[0.9375rem] leading-relaxed text-paper/70">
+            Pick the area closest to what you need and we will reply with how we would approach it.
+          </p>
+
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {
+              services.map((service) => (
+                <li>
+                  <a
+                    href={`mailto:${company.email}?subject=${encodeURIComponent(
+                      `${service.name} enquiry`,
+                    )}`}
+                    class="inline-flex min-h-9 items-center rounded-sm border border-paper/20 px-3 py-2 text-[0.8125rem] text-paper/80 transition-colors duration-200 hover:border-paper/45 hover:text-paper"
+                  >
+                    {service.name}
+                    <span class="sr-only"> — email us about this service</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </div>
