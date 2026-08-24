@@ -30,6 +30,14 @@ export const company = {
   suffix: 'Sdn Bhd',
   url: 'https://litesoc.app',
   email: 'hello@litesoc.app',
+  /**
+   * Downloadable corporate profile. `path` is relative to `public/`; `filename`
+   * is what the visitor's browser saves it as.
+   */
+  corporateProfile: {
+    path: '/corporate_profile.pdf',
+    filename: 'Litesoc-Sdn-Bhd-Corporate-Profile.pdf',
+  },
   /** Inbox for vulnerability reports; mirrored in /.well-known/security.txt. */
   securityEmail: 'security@litesoc.app',
   country: 'Malaysia',

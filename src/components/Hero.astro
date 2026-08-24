@@ -1,6 +1,17 @@
 ---
+import { statSync } from 'node:fs';
 import StructureTree from './StructureTree.astro';
 import { company } from '../data/site';
+
+const { path: profilePath, filename: profileFilename } = company.corporateProfile;
+
+// Read the size at build time so the label can never drift from the actual file.
+const profileBytes = statSync(`public${profilePath}`).size;
+const profileSize =
+  profileBytes < 1_000_000
+    ? `${Math.round(profileBytes / 1_000)} KB`
+    : `${(profileBytes / 1_000_000).toFixed(1)} MB`;
+const profileMeta = `PDF, ${profileSize}`;
 ---
 
 <section class="hero relative overflow-hidden border-b border-line">
@@ -24,7 +35,30 @@ import { company } from '../data/site';
         <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a href="/#services" class="btn btn-primary">Explore Our Work</a>
           <a href="/#about" class="btn btn-secondary">About Litesoc</a>
+          <a
+            href={profilePath}
+            download={profileFilename}
+            type="application/pdf"
+            class="btn btn-secondary"
+            aria-label={`Download the ${company.legalName} corporate profile (${profileMeta})`}
+          >
+            <svg
+              aria-hidden="true"
+              class="h-4 w-4 shrink-0"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="square"
+            >
+              <path d="M8 1.75v8.5m0 0L4.75 7M8 10.25 11.25 7" />
+              <path d="M2.25 11.75v2.5h11.5v-2.5" />
+            </svg>
+            Corporate Profile
+          </a>
         </div>
+
+        <p class="mt-4 text-[0.8125rem] text-slate">{profileMeta}</p>
       </div>
 
       <div class="lg:col-span-5">
