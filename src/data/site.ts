@@ -30,6 +30,8 @@ export const company = {
   suffix: 'Sdn Bhd',
   url: 'https://litesoc.app',
   email: 'hello@litesoc.app',
+  /** Inbox for vulnerability reports; mirrored in /.well-known/security.txt. */
+  securityEmail: 'security@litesoc.app',
   country: 'Malaysia',
   countryCode: 'MY',
   descriptor: 'technology company',

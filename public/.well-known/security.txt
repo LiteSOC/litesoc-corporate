@@ -1,4 +1,4 @@
-Contact: mailto:hello@litesoc.app
+Contact: mailto:security@litesoc.app
 Policy: https://litesoc.app/security
 Preferred-Languages: en, ms
 Canonical: https://litesoc.app/.well-known/security.txt
