@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { company, services } from '../data/site';
+---
+
+<BaseLayout
+  title="Services | Litesoc Sdn Bhd"
+  description="Software development, cybersecurity, network and infrastructure, cloud and DevOps, and infrastructure lab services delivered by Litesoc Sdn Bhd."
+>
+  <PageHero
+    eyebrow="Services"
+    heading="Technology Services"
+    lede="From software engineering to cybersecurity and infrastructure, we help organizations design, build and operate reliable technology environments. Five practice areas, delivered by the same engineering team that builds our products."
+    ledeWidth="38rem"
+  >
+    <ul class="mt-8 flex list-none flex-wrap gap-2 p-0">
+      {
+        services.map((service) => (
+          <li class="border border-line-strong px-3 py-[7px] text-[0.8125rem] font-semibold text-ink">
+            {service.name}
+          </li>
+        ))
+      }
+    </ul>
+  </PageHero>
+
+  <section class="border-b border-line">
+    <div class="container-x">
+      {
+        services.map((service, i) => (
+          <article
+            class:list={[
+              'grid grid-cols-[repeat(auto-fit,minmax(min(21.25rem,100%),1fr))] gap-[clamp(1.75rem,4vw,4rem)] py-[clamp(2.75rem,5vw,4.5rem)]',
+              i < services.length - 1 && 'border-b border-line',
+            ]}
+          >
+            <div>
+              <p class="text-xs font-extrabold tracking-[0.14em] text-line-strong">
+                {String(i + 1).padStart(2, '0')}
+              </p>
+              <h2 class="h-sub mt-4 text-ink">{service.name}</h2>
+              <p class="mt-4 max-w-[30rem] text-[1.03125rem] leading-[1.65] text-slate">
+                {service.detail}
+              </p>
+            </div>
+            <div>
+              <p class="eyebrow text-[0.65625rem] tracking-[0.18em]">Capabilities</p>
+              <ul class="mt-4 grid list-none grid-cols-[repeat(auto-fit,minmax(min(12.5rem,100%),1fr))] gap-x-8 p-0">
+                {service.capabilities.map((capability) => (
+                  <li class="border-b border-line py-[11px] text-[0.9375rem] text-ink">
+                    {capability}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-ink py-[clamp(3.5rem,6vw,5.5rem)] text-paper">
+    <div
+      class="container-x flex flex-wrap items-end justify-between gap-8"
+    >
+      <div>
+        <p class="eyebrow text-paper/55">Next step</p>
+        <h2
+          class="mt-[1.125rem] max-w-[30rem] text-[clamp(1.625rem,1.2rem+1.6vw,2.5rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-paper"
+        >
+          Have a Technology Challenge?
+        </h2>
+        <p class="mt-4 max-w-[32rem] text-[1.03125rem] leading-[1.6] text-paper/72">
+          Tell us what you are working on and we will tell you how we would approach it.
+        </p>
+      </div>
+      <a href={`mailto:${company.email}`} class="btn btn-invert min-h-[3.25rem]">
+        {company.email}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

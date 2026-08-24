@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { nav } from '../data/site';
 ---
 
 <BaseLayout
@@ -7,15 +8,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="The page you requested could not be found on litesoc.app."
   noindex
 >
-  <section class="container-x py-28 sm:py-36">
-    <p class="eyebrow">Error 404</p>
-    <h1 class="rule-heading mt-5 text-ink">This page could not be found.</h1>
+  <section class="ruled container-x py-28 sm:py-36">
+    <p class="eyebrow eyebrow-accent">Error 404</p>
+    <h1 class="h-section mt-5 text-ink">This page could not be found.</h1>
     <p class="mt-5 max-w-[34rem] text-[1.0625rem] leading-relaxed text-slate">
       The address may be mistyped, or the page may have moved.
     </p>
-    <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+    <div class="mt-9 flex flex-wrap gap-3">
       <a href="/" class="btn btn-primary">Back to home</a>
-      <a href="/#services" class="btn btn-secondary">See what we do</a>
+      <a href="/services/" class="btn btn-secondary">See what we do</a>
     </div>
+
+    <nav aria-label="All pages" class="mt-12 border-t border-line pt-7">
+      <p class="eyebrow">Everything else</p>
+      <ul class="mt-4 flex list-none flex-wrap gap-x-7 gap-y-2 p-0">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-[0.9375rem] font-medium text-slate transition-colors hover:text-ink"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
   </section>
 </BaseLayout>

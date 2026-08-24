@@ -1,0 +1,43 @@
+---
+import { company, journey } from '../data/site';
+---
+
+<section class="border-b border-line py-[clamp(4rem,7vw,6.5rem)]">
+  <div class="container-x">
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(21.25rem,100%),1fr))] gap-[clamp(2.25rem,5vw,4.5rem)]"
+    >
+      <div>
+        <p class="eyebrow">Company Journey</p>
+        <h2 class="h-section mt-5 text-ink">From a Development Practice to a Technology Company</h2>
+        <p class="mt-[1.125rem] max-w-[30rem] text-[1.03125rem] leading-[1.65] text-slate">
+          Our journey began in {company.predecessor.year} under {company.predecessor.name}. In {
+            company.incorporated
+          }, the business continued its evolution with the incorporation of {company.legalName}.
+        </p>
+      </div>
+
+      <ol class="m-0 grid list-none p-0">
+        {
+          journey.map((step, i) => (
+            <li
+              class:list={[
+                'grid grid-cols-[repeat(auto-fit,minmax(min(6.875rem,100%),1fr))] gap-6 py-6',
+                i === 0 ? 'border-t-2 border-ink' : 'border-t border-line',
+                i === journey.length - 1 && 'border-b border-line',
+              ]}
+            >
+              <span class="text-[0.9375rem] font-extrabold tracking-[0.02em] text-ink">
+                {step.period}
+              </span>
+              <div>
+                <p class="text-lg font-bold tracking-[-0.015em] text-ink">{step.title}</p>
+                <p class="mt-[7px] text-[0.9375rem] leading-[1.6] text-slate">{step.short}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { accentClasses, company, products } from '../data/site';
+---
+
+<BaseLayout
+  title="Products | Litesoc Sdn Bhd"
+  description="LiteSOC and Digital Khairat — the two platforms owned and developed by Litesoc Sdn Bhd."
+>
+  <PageHero
+    eyebrow="Products"
+    heading={`Two platforms, both owned by ${company.legalName}.`}
+    lede={`Purpose-built platforms developed by ${company.legalName} to solve distinct operational and community challenges. Each is branded independently and serves a different sector.`}
+    ledeWidth="38rem"
+  />
+
+  <section class="border-b border-line py-[clamp(3rem,5vw,5rem)]">
+    <div class="container-x">
+      {
+        products.map((product, i) => {
+          const accent = accentClasses[product.accent];
+          return (
+            <div
+              class:list={[
+                'border border-line border-t-[3px]',
+                accent.topRule,
+                i > 0 && 'mt-[clamp(1.25rem,2.4vw,2rem)]',
+              ]}
+            >
+              <div class="hairline grid-cols-[repeat(auto-fit,minmax(min(20rem,100%),1fr))]">
+                <div class="bg-paper p-[clamp(1.75rem,3vw,2.75rem)]">
+                  <img
+                    src={product.logo}
+                    width={product.logoWidth}
+                    height={product.logoHeight}
+                    alt={product.name}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    class="block h-[5.5rem] w-auto object-contain"
+                  />
+                  <p
+                    class:list={[
+                      'mt-[1.625rem] text-[0.6875rem] font-bold uppercase tracking-[0.18em]',
+                      accent.text,
+                    ]}
+                  >
+                    {product.kicker}
+                  </p>
+                  <h2 class="mt-3.5 text-[clamp(1.875rem,1.4rem+1.6vw,2.625rem)] font-extrabold tracking-[-0.032em] text-ink">
+                    {product.name}
+                  </h2>
+                  <p class="mt-4 max-w-[26rem] text-[1.03125rem] leading-[1.65] text-slate">
+                    {product.description}
+                  </p>
+                  <div class="mt-8 flex flex-wrap items-center gap-5 border-t border-line pt-6">
+                    <a
+                      href={product.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class:list={['btn', accent.button]}
+                    >
+                      {product.cta}
+                    </a>
+                    <span class="text-[0.84375rem] tracking-[0.03em] text-slate-400">
+                      {product.domain}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="bg-mist p-[clamp(1.75rem,3vw,2.75rem)]">
+                  <p class="eyebrow text-[0.65625rem] tracking-[0.18em]">Scope</p>
+                  <ul class="mt-4 grid list-none p-0">
+                    {product.highlights.map((highlight) => (
+                      <li class="border-b border-line py-3.5 text-[0.96875rem] text-ink">
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                  <p class="eyebrow mt-[1.625rem] text-[0.65625rem] tracking-[0.18em]">Built for</p>
+                  <p class="mt-3 text-[0.96875rem] leading-[1.6] text-slate">{product.builtFor}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+
+      <p
+        class="mt-[clamp(2rem,3.5vw,3rem)] max-w-[44rem] border-l-2 border-line-strong pl-5 text-[0.96875rem] leading-[1.7] text-slate-400"
+      >
+        Both products sit directly under {company.legalName}. {products[0].name} is a product of the
+        company, not the company itself, and {products[1].name} is not part of {products[0].name}.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

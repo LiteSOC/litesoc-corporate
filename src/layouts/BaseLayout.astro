@@ -72,6 +72,20 @@ const organizationSchema = {
           areaServed: company.countryCode,
           availableLanguage: ['en', 'ms'],
         },
+        {
+          '@type': 'ContactPoint',
+          contactType: 'security',
+          email: company.securityEmail,
+          areaServed: company.countryCode,
+          availableLanguage: ['en', 'ms'],
+        },
+        {
+          '@type': 'ContactPoint',
+          contactType: 'human resources',
+          email: company.careersEmail,
+          areaServed: company.countryCode,
+          availableLanguage: ['en', 'ms'],
+        },
       ],
       knowsAbout: [...capabilities],
       owns: products.map((product) => ({
@@ -143,13 +157,7 @@ const organizationSchema = {
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <link
-      rel="preload"
-      href="/fonts/ibm-plex-sans-var.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href="/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={company.legalName} />

@@ -1,0 +1,182 @@
+---
+import { statSync } from 'node:fs';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Arrow from '../components/Arrow.astro';
+import { company, journey, principles, products } from '../data/site';
+
+const { path: profilePath, filename: profileFilename } = company.corporateProfile;
+const profileBytes = statSync(`public${profilePath}`).size;
+const profileSize =
+  profileBytes < 1_000_000
+    ? `${Math.round(profileBytes / 1_000)} KB`
+    : `${(profileBytes / 1_000_000).toFixed(1)} MB`;
+const profileMeta = `PDF, ${profileSize}`;
+
+const registeredDetails = [
+  { label: 'Legal name', value: company.legalName },
+  { label: 'Company registration no.', value: company.registrationNo },
+  { label: 'D-U-N-S number', value: company.duns },
+] as const;
+---
+
+<BaseLayout
+  title="Company | Litesoc Sdn Bhd"
+  description={`${company.legalName} is a Malaysian technology company that builds its own digital products and delivers software, cybersecurity, cloud, networking and infrastructure solutions.`}
+>
+  <PageHero
+    eyebrow="Company"
+    heading="A Malaysian technology company with its own products."
+    lede={`${company.legalName} builds digital products and delivers software, cybersecurity, cloud, networking and infrastructure solutions.`}
+  />
+
+  <section class="border-b border-line py-[clamp(3.5rem,6vw,6rem)]">
+    <div class="container-x">
+      <div
+        class="grid grid-cols-[repeat(auto-fit,minmax(min(21.25rem,100%),1fr))] gap-[clamp(2.25rem,5vw,4.5rem)]"
+      >
+        <div>
+          <p class="eyebrow">Who We Are</p>
+          <h2 class="h-sub mt-5 text-ink">Built around engineering, not sales</h2>
+        </div>
+        <div class="grid max-w-[40rem] gap-5 text-[1.0625rem] leading-[1.68] text-slate">
+          <p>
+            {company.legalName} is a Malaysian technology company focused on developing practical
+            digital products and delivering modern technology solutions. Our work spans software
+            engineering, cybersecurity, cloud, networking and infrastructure, supported by an
+            engineering approach centred on security, reliability and long-term maintainability.
+          </p>
+          <p>
+            The company operates along two lines. It owns and develops its own platforms &mdash; {
+              products[0].name
+            } and {products[1].name} &mdash; and it delivers technology services for client
+            organizations. Both lines are held to the same engineering standards.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-line bg-mist py-[clamp(3.5rem,6vw,6rem)]">
+    <div class="container-x">
+      <p class="eyebrow">Company Journey</p>
+      <h2 class="h-sub mt-5 text-ink">
+        {company.predecessor.year} to today
+      </h2>
+      <ol
+        class="hairline mt-[clamp(2rem,3.5vw,3.25rem)] grid-cols-[repeat(auto-fit,minmax(min(16.25rem,100%),1fr))] list-none border-t-2 border-ink p-0"
+      >
+        {
+          journey.map((step) => (
+            <li class="bg-mist px-6 pt-[1.625rem] pb-[1.875rem]">
+              <p class="text-sm font-extrabold tracking-[0.04em] text-sec">{step.period}</p>
+              <p class="mt-3.5 text-[1.1875rem] font-bold tracking-[-0.02em] text-ink">
+                {step.title}
+              </p>
+              <p class="mt-2.5 text-[0.9375rem] leading-[1.62] text-slate">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-b border-line py-[clamp(3.5rem,6vw,6rem)]">
+    <div class="container-x">
+      <div
+        class="grid grid-cols-[repeat(auto-fit,minmax(min(21.25rem,100%),1fr))] gap-[clamp(2.25rem,5vw,4.5rem)]"
+      >
+        <div>
+          <p class="eyebrow">Engineering Philosophy</p>
+          <h2 class="h-sub mt-5 text-ink">Three commitments that shape every engagement</h2>
+          <a href="/services/" class="link-arrow mt-7">
+            See our services
+            <Arrow />
+          </a>
+        </div>
+        <div class="grid">
+          {
+            principles.map((principle, i) => (
+              <div
+                class:list={[
+                  'py-6',
+                  i === 0 ? 'border-t-2 border-ink' : 'border-t border-line',
+                  i === principles.length - 1 && 'border-b border-line',
+                ]}
+              >
+                <h3 class="text-[1.1875rem] font-bold tracking-[-0.02em] text-ink">
+                  {principle.title}
+                </h3>
+                <p class="mt-2.5 text-[0.96875rem] leading-[1.65] text-slate">{principle.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-line py-[clamp(3.5rem,6vw,6rem)]">
+    <div class="container-x">
+      <p class="eyebrow">Corporate Information</p>
+      <h2 class="h-sub mt-5 text-ink">Registered details</h2>
+
+      <div
+        class="hairline mt-[clamp(2rem,3.5vw,3.25rem)] grid-cols-[repeat(auto-fit,minmax(min(17.5rem,100%),1fr))] border border-line"
+      >
+        {
+          registeredDetails.map((detail) => (
+            <div class="bg-paper px-6 py-[1.625rem]">
+              <p class="eyebrow text-[0.65625rem] tracking-[0.18em]">{detail.label}</p>
+              <p class="mt-2.5 text-[1.0625rem] font-bold tracking-[0.01em] text-ink">
+                {detail.value}
+              </p>
+            </div>
+          ))
+        }
+        <div class="bg-paper px-6 py-[1.625rem]">
+          <p class="eyebrow text-[0.65625rem] tracking-[0.18em]">Registered office</p>
+          <address class="mt-2.5 text-[0.9375rem] not-italic leading-[1.65] text-ink">
+            {company.address.lines.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+          </address>
+        </div>
+      </div>
+
+      <div
+        class="mt-[clamp(2rem,3.5vw,3.25rem)] flex flex-wrap items-center gap-x-6 gap-y-4 border-t-2 border-ink pt-8"
+      >
+        <div class="min-w-0 flex-1">
+          <p class="eyebrow">Corporate profile</p>
+          <p class="mt-2.5 max-w-[32rem] text-[0.96875rem] leading-[1.65] text-slate">
+            The full company profile, including our services, products and corporate details, as a
+            single document.
+          </p>
+        </div>
+        <div>
+          <a
+            href={profilePath}
+            download={profileFilename}
+            type="application/pdf"
+            class="btn btn-primary"
+            aria-label={`Download the ${company.legalName} corporate profile (${profileMeta})`}
+          >
+            <svg
+              aria-hidden="true"
+              class="h-4 w-4 shrink-0"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="square"
+            >
+              <path d="M8 1.75v8.5m0 0L4.75 7M8 10.25 11.25 7"></path>
+              <path d="M2.25 11.75v2.5h11.5v-2.5"></path>
+            </svg>
+            Download Corporate Profile
+          </a>
+          <p class="mt-2 text-[0.8125rem] text-slate-400">{profileMeta}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

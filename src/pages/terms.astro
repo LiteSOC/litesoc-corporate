@@ -1,0 +1,78 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import LegalStack from '../components/LegalStack.astro';
+import LegalItem from '../components/LegalItem.astro';
+import { company, products } from '../data/site';
+
+/*
+  Every statement here is a verifiable fact about how this site is operated.
+  The governing-law entry deliberately states where the company is incorporated
+  rather than asserting a choice-of-law clause — that wording is for counsel to
+  supply, and inventing one would be worse than saying nothing.
+*/
+const lastUpdated = new Date().toISOString().slice(0, 10);
+---
+
+<LegalLayout
+  title="Terms | Litesoc Sdn Bhd"
+  eyebrow="Terms"
+  heading="Terms of Use"
+  lede="Terms governing use of litesoc.app. Product terms for LiteSOC and Digital Khairat are published on their own sites."
+  description="Terms governing use of litesoc.app, the corporate website of Litesoc Sdn Bhd."
+  lastUpdated={lastUpdated}
+>
+  <LegalStack>
+    <LegalItem heading="Scope">
+      <p>
+        This site provides corporate information about {company.legalName}. It is not an offer, a
+        quotation or a contract, and nothing on it forms an agreement between you and the company.
+      </p>
+      <p>
+        The products below operate separately and publish their own terms on their own sites:
+      </p>
+      <ul>
+        {
+          products.map((product) => (
+            <li>
+              {product.name} &mdash;{' '}
+              <a href={product.url} target="_blank" rel="noopener noreferrer">
+                {product.domain}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </LegalItem>
+
+    <LegalItem heading="Intellectual property">
+      <p>
+        Content, marks and product logos on this site belong to {company.legalName} and are not
+        licensed for reuse.
+      </p>
+    </LegalItem>
+
+    <LegalItem heading="Accuracy">
+      <p>
+        We keep the corporate details on this site current, but the information is provided for
+        general reference. The authoritative record of the company&rsquo;s registration is the one
+        held by the Companies Commission of Malaysia (SSM) under registration number {
+          company.registrationNo
+        }.
+      </p>
+    </LegalItem>
+
+    <LegalItem heading="Governing law">
+      <p>
+        {company.legalName} is incorporated in {company.country}, with its registered office in {
+          company.address.locality
+        }, {company.address.region}. This site is operated from {company.country}.
+      </p>
+    </LegalItem>
+
+    <LegalItem heading="Contact">
+      <p>
+        Questions about these terms: <a href={`mailto:${company.email}`}>{company.email}</a>.
+      </p>
+    </LegalItem>
+  </LegalStack>
+</LegalLayout>

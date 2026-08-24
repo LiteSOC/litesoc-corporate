@@ -1,353 +1,45 @@
 ---
-import { company, products, services, accentClasses } from '../data/site';
-
-interface Props {
-  /** `compact` is the hero lockup; `full` is the company structure section. */
-  variant?: 'compact' | 'full';
-  /** Heading id this tree is labelled by, when one exists. */
-  labelledby?: string;
-}
-
-const { variant = 'compact', labelledby } = Astro.props;
-const isFull = variant === 'full';
+import { accentClasses, company, products, services } from '../data/site';
 ---
 
-{/*
-  Corporate structure, drawn as hairline rules rather than an image.
-
-  The company has two branches: products it owns, and services it delivers.
-  Product accent colours appear only on product items, so colour continues to
-  mark provenance. The same component renders the hero lockup and the
-  structure section, so the hierarchy is expressed once. Connectors are
-  decorative; the underlying markup is nested lists, which is what assistive
-  technology reads.
-*/}
-<div class="tree" data-variant={variant} aria-labelledby={labelledby}>
-  <div class="tree-root">
-    <div class={`node node-root ${isFull ? 'node-lg' : ''}`}>
-      <span aria-hidden="true" class="node-rule bg-ink"></span>
-      <p class="node-name">{company.legalName}</p>
-      <p class="eyebrow mt-1.5">Company</p>
-    </div>
+<div>
+  <div class="border-t-2 border-ink bg-paper px-5 py-[1.125rem]">
+    <p class="text-[1.0625rem] font-bold tracking-[-0.015em] text-ink">{company.legalName}</p>
+    <p class="eyebrow mt-1.5 tracking-[0.16em]">Company</p>
   </div>
 
-  <div class="tree-connector" aria-hidden="true"></div>
+  <div class="ml-[1.375rem] h-[1.625rem] border-l border-line-strong"></div>
 
-  <ul class="tree-children">
-    <li class="tree-child">
-      <div class={`node ${isFull ? 'node-lg' : ''}`}>
-        <span aria-hidden="true" class="node-rule bg-ink"></span>
-        <p class="node-name">Products</p>
-        <p class="eyebrow mt-1.5">Owned and developed</p>
-
-        <ul class="branch-items">
-          {
-            products.map((product) => {
-              const accent = accentClasses[product.accent];
-              return (
-                <li class="branch-item">
-                  <span aria-hidden="true" class={`branch-mark ${accent.rule}`} />
-                  <span class="branch-body">
-                    <span class="branch-name">{product.name}</span>
-                    {isFull ? (
-                      <a
-                        href={product.url}
-                        class={`branch-link ${accent.text}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {product.domain}
-                        <span class="sr-only">
-                          — visit the {product.name} website (opens in a new tab)
-                        </span>
-                        <svg
-                          class="h-3 w-3"
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.25"
-                          aria-hidden="true"
-                        >
-                          <path d="M4 2.5h5.5V8M9.5 2.5L2.5 9.5" />
-                        </svg>
-                      </a>
-                    ) : (
-                      <span class="branch-meta">{product.domain}</span>
-                    )}
-                  </span>
-                </li>
-              );
-            })
-          }
-        </ul>
+  <div class="grid gap-3.5">
+    <div class="border border-line bg-paper px-[1.125rem] py-4">
+      <p class="text-[0.90625rem] font-bold text-ink">Products</p>
+      <div class="mt-3 grid gap-[9px] border-t border-line pt-3">
+        {
+          products.map((product) => (
+            <div class="flex items-center gap-2.5">
+              <span class:list={['h-0.5 w-3 shrink-0', accentClasses[product.accent].rule]} />
+              <span class="text-[0.84375rem] font-semibold text-ink">{product.name}</span>
+              <span class="text-[0.71875rem] tracking-[0.02em] text-slate-400">
+                {product.domain}
+              </span>
+            </div>
+          ))
+        }
       </div>
-    </li>
+    </div>
 
-    <li class="tree-child">
-      <div class={`node ${isFull ? 'node-lg' : ''}`}>
-        <span aria-hidden="true" class="node-rule bg-ink"></span>
-        <p class="node-name">Services</p>
-        <p class="eyebrow mt-1.5">Delivered for clients</p>
-
-        <ul class="branch-items">
-          {
-            services.map((service) => (
-              <li class="branch-item">
-                <span aria-hidden="true" class="branch-mark bg-line-strong" />
-                <span class="branch-body">
-                  <span class="branch-name">{service.name}</span>
-                </span>
-              </li>
-            ))
-          }
-        </ul>
+    <div class="border border-line bg-paper px-[1.125rem] py-4">
+      <p class="text-[0.90625rem] font-bold text-ink">Services</p>
+      <div class="mt-3 grid gap-[9px] border-t border-line pt-3">
+        {
+          services.map((service) => (
+            <div class="flex items-center gap-2.5">
+              <span class="h-0.5 w-3 shrink-0 bg-line-strong" />
+              <span class="text-[0.84375rem] text-slate">{service.name}</span>
+            </div>
+          ))
+        }
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
-
-<style>
-  .tree {
-    --trunk-x: 1.25rem;
-    --elbow: 1.25rem;
-    --stem: 1.5rem;
-    --gap: 1rem;
-    position: relative;
-  }
-
-  .tree[data-variant='full'] {
-    --stem: 2rem;
-    --gap: 1.25rem;
-  }
-
-  .node {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border: 1px solid var(--color-line);
-    border-radius: 2px;
-    background-color: var(--color-paper);
-    padding: 1.125rem 1.25rem 1.25rem;
-  }
-
-  .node-lg {
-    padding: 1.5rem 1.5rem 1.625rem;
-  }
-
-  .node-rule {
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    height: 2px;
-  }
-
-  .node-root {
-    border-color: var(--color-line-strong);
-  }
-
-  .node-name {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 1.25;
-    color: var(--color-ink);
-  }
-
-  .tree[data-variant='full'] .node-name {
-    font-size: 1.125rem;
-  }
-
-  /* --- Items inside a branch -------------------------------------------- */
-
-  .branch-items {
-    margin: 1rem 0 0;
-    padding: 0.875rem 0 0;
-    border-top: 1px solid var(--color-line);
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-  }
-
-  .tree[data-variant='full'] .branch-items {
-    margin-top: 1.25rem;
-    padding-top: 1.125rem;
-    gap: 0.875rem;
-  }
-
-  .branch-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .branch-mark {
-    margin-top: 0.5rem;
-    height: 2px;
-    width: 0.75rem;
-    flex-shrink: 0;
-  }
-
-  .branch-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-    min-width: 0;
-  }
-
-  .branch-name {
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1.35;
-    color: var(--color-ink);
-  }
-
-  .branch-meta {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    color: var(--color-slate-400);
-  }
-
-  .branch-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding-block: 0.25rem;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
-    text-underline-offset: 4px;
-  }
-
-  .branch-link:hover {
-    text-decoration-color: currentColor;
-  }
-
-  /* --- Branch layout ----------------------------------------------------- */
-
-  .tree-children {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap);
-    padding-left: calc(var(--trunk-x) + var(--elbow));
-    list-style: none;
-    margin: 0;
-  }
-
-  .tree-child {
-    position: relative;
-    display: flex;
-  }
-
-  /* Grid rows stretch the list item; make the card fill it so both branches
-     line up regardless of how many items each holds. */
-  .tree-child > .node {
-    flex: 1;
-  }
-
-  /* --- Mobile: a left-hand trunk with an elbow into each branch. ---------- */
-
-  .tree-connector {
-    position: relative;
-    height: var(--stem);
-  }
-
-  .tree-connector::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: var(--trunk-x);
-    width: 1px;
-    background-color: var(--color-line-strong);
-  }
-
-  /* One continuous trunk: every child contributes the segment beside it, and
-     the last child's stops at its own elbow so the line does not overshoot. */
-  .tree-child::after {
-    content: '';
-    position: absolute;
-    left: calc(-1 * var(--elbow));
-    top: calc(-1 * var(--gap));
-    bottom: 0;
-    width: 1px;
-    background-color: var(--color-line-strong);
-  }
-
-  .tree-child:last-child::after {
-    bottom: auto;
-    height: calc(var(--gap) + 2.25rem);
-  }
-
-  .tree-child::before {
-    content: '';
-    position: absolute;
-    left: calc(-1 * var(--elbow));
-    top: 2.25rem;
-    width: var(--elbow);
-    height: 1px;
-    background-color: var(--color-line-strong);
-  }
-
-  /* --- Wide: a centred trunk that branches into two. --------------------- */
-
-  @media (min-width: 40rem) {
-    .tree-root {
-      display: flex;
-      justify-content: center;
-    }
-
-    .tree-root .node {
-      width: min(22rem, 100%);
-      text-align: center;
-    }
-
-    .tree-connector {
-      height: calc(var(--stem) * 2);
-    }
-
-    /* Stem down from the company node. */
-    .tree-connector::before {
-      left: 50%;
-      right: auto;
-      top: 0;
-      bottom: 50%;
-      width: 1px;
-    }
-
-    /* Horizontal branch spanning the two columns' centres. A 2-column grid
-       with gap g puts each centre at 25% - g/4 from its side, not a flat 25%. */
-    .tree-connector::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: calc(25% - var(--gap) / 4);
-      right: calc(25% - var(--gap) / 4);
-      height: 1px;
-      background-color: var(--color-line-strong);
-    }
-
-    .tree-children {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--gap);
-      padding-left: 0;
-    }
-
-    .tree-child::before {
-      display: none;
-    }
-
-    /* Both selectors, so the mobile :last-child override is reset too. */
-    .tree-child::after,
-    .tree-child:last-child::after {
-      left: 50%;
-      top: calc(-1 * var(--stem));
-      bottom: auto;
-      height: var(--stem);
-      width: 1px;
-    }
-  }
-</style>

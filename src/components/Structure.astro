@@ -1,0 +1,81 @@
+---
+import { accentClasses, company, products, services } from '../data/site';
+---
+
+<section class="border-b border-line bg-mist py-[clamp(4rem,7vw,6.5rem)]">
+  <div class="container-x">
+    <div class="max-w-[44rem]">
+      <p class="eyebrow">Company Structure</p>
+      <h2 class="h-section mt-5 text-ink">How {company.shortName} Is Organised</h2>
+      <p class="mt-[1.125rem] text-[1.09375rem] leading-[1.62] text-slate">
+        {company.legalName} works along two lines: platforms it owns and develops, and services it
+        delivers for clients. {products[0].name} and {products[1].name} are products of the company
+        &mdash; branded independently, serving different sectors, built to the same engineering
+        standards as our client work.
+      </p>
+    </div>
+
+    <div class="mt-[clamp(2.5rem,4vw,4rem)]">
+      <div class="mx-auto max-w-[58.75rem]">
+        <div class="bg-ink px-[1.625rem] py-[1.375rem] text-paper">
+          <p class="text-[1.3125rem] font-extrabold tracking-[-0.02em]">{company.legalName}</p>
+          <p
+            class="mt-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-paper/60"
+          >
+            Company &middot; {company.hq}
+          </p>
+        </div>
+
+        <div class="mx-auto h-[2.125rem] w-px bg-line-strong"></div>
+
+        <div
+          class="grid grid-cols-[repeat(auto-fit,minmax(min(20rem,100%),1fr))] gap-[clamp(1rem,2vw,1.75rem)]"
+        >
+          <div class="border border-line-strong bg-paper">
+            <div
+              class="flex items-baseline justify-between gap-3 border-b border-line px-[1.375rem] py-[1.125rem]"
+            >
+              <p class="text-[1.0625rem] font-bold text-ink">Products</p>
+              <p class="eyebrow text-[0.65625rem] tracking-[0.16em]">Owned &amp; developed</p>
+            </div>
+            <div class="hairline">
+              {
+                products.map((product) => (
+                  <div
+                    class:list={[
+                      'border-l-[3px] bg-paper px-[1.375rem] py-[1.125rem]',
+                      accentClasses[product.accent].leftRule,
+                    ]}
+                  >
+                    <p class="text-base font-bold text-ink">{product.name}</p>
+                    <p class="mt-[5px] text-[0.8125rem] text-slate-400">
+                      {product.kicker} &middot; {product.domain}
+                    </p>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+
+          <div class="border border-line-strong bg-paper">
+            <div
+              class="flex items-baseline justify-between gap-3 border-b border-line px-[1.375rem] py-[1.125rem]"
+            >
+              <p class="text-[1.0625rem] font-bold text-ink">Services</p>
+              <p class="eyebrow text-[0.65625rem] tracking-[0.16em]">Delivered for clients</p>
+            </div>
+            <div class="hairline">
+              {
+                services.map((service) => (
+                  <div class="border-l-[3px] border-l-line bg-paper px-[1.375rem] py-3.5">
+                    <p class="text-[0.9375rem] text-ink">{service.name}</p>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

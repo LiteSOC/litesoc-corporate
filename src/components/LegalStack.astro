@@ -1,0 +1,37 @@
+---
+/*
+  The ruled stack the legal pages are built from: a 2px ink rule on top, then
+  one hairline under each entry. Wrap <LegalItem> children in this.
+*/
+---
+
+<div class="mt-[2.125rem] grid border-t-2 border-ink [&>*]:border-b [&>*]:border-line">
+  <slot />
+</div>
+
+<style is:global>
+  .legal-body a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 4px;
+  }
+
+  .legal-body a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+
+  .legal-body ul {
+    margin-top: 0.75rem;
+    padding-left: 1.125rem;
+    list-style: disc;
+  }
+
+  .legal-body li {
+    margin-top: 0.375rem;
+  }
+
+  .legal-body p + p {
+    margin-top: 0.875rem;
+  }
+</style>

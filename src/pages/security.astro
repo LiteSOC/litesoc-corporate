@@ -1,5 +1,7 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
+import LegalStack from '../components/LegalStack.astro';
+import LegalItem from '../components/LegalItem.astro';
 import { company, products } from '../data/site';
 
 const lastUpdated = new Date().toISOString().slice(0, 10);
@@ -7,47 +9,63 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
 
 <LegalLayout
   title="Security | Litesoc Sdn Bhd"
-  heading="Reporting a security issue"
-  eyebrow="Corporate"
+  eyebrow="Security"
+  heading="Security & Disclosure"
+  lede="How to report a vulnerability in this website or in a platform operated by Litesoc Sdn Bhd, and what to expect in return."
   description="How to report a suspected security vulnerability to Litesoc Sdn Bhd."
   lastUpdated={lastUpdated}
 >
-  <h2>Reporting a vulnerability</h2>
-  <p>
-    If you believe you have found a security vulnerability in this website or in one of our
-    products, please report it to{' '}
-    <a href={`mailto:${company.securityEmail}`}>{company.securityEmail}</a>. Include enough detail for us to
-    reproduce the issue &mdash; the affected URL or component, the steps you took, and what you
-    observed.
-  </p>
+  <div class="mt-8 border border-line-strong bg-mist px-6 py-[1.625rem]">
+    <p class="eyebrow text-[0.65625rem] tracking-[0.18em]">Report to</p>
+    <a
+      href={`mailto:${company.securityEmail}`}
+      class="mt-3 inline-block text-xl font-bold text-ink transition-colors hover:text-sec"
+    >
+      {company.securityEmail}
+    </a>
+    <p class="mt-3 text-[0.90625rem] leading-[1.65] text-slate">
+      Include the affected URL or host, reproduction steps and impact. Please do not access data
+      that is not yours.
+    </p>
+  </div>
 
-  <h2>What to expect</h2>
-  <p>
-    We will acknowledge your report and keep you informed while we investigate. We ask that you give
-    us a reasonable opportunity to address the issue before disclosing it publicly.
-  </p>
+  <LegalStack>
+    <LegalItem heading="Responsible disclosure">
+      <p>
+        Report privately first and give us a reasonable opportunity to remediate before publishing.
+        We will acknowledge your report and keep you informed while we investigate.
+      </p>
+    </LegalItem>
 
-  <h2>Please avoid</h2>
-  <ul>
-    <li>Accessing, modifying or deleting data that does not belong to you.</li>
-    <li>Testing that degrades service availability for others.</li>
-    <li>Social engineering, phishing or physical attacks against our staff or users.</li>
-  </ul>
+    <LegalItem heading="Practices on this site">
+      <p>
+        Static hosting with HTTPS enforced, no server runtime, no database, no third-party scripts
+        and no cookies. Dependencies are monitored for advisories.
+      </p>
+    </LegalItem>
 
-  <h2>Product security</h2>
-  <p>
-    Each product maintains its own security contacts and documentation:
-  </p>
-  <ul>
-    {
-      products.map((product) => (
-        <li>
-          {product.name} &mdash;{' '}
-          <a href={product.url} target="_blank" rel="noopener noreferrer">
-            {product.domain}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+    <LegalItem heading="Please avoid">
+      <ul>
+        <li>Accessing, modifying or deleting data that does not belong to you.</li>
+        <li>Testing that degrades service availability for others.</li>
+        <li>Social engineering, phishing or physical attacks against our staff or users.</li>
+      </ul>
+    </LegalItem>
+
+    <LegalItem heading="Product security">
+      <p>Each product maintains its own security contacts and documentation:</p>
+      <ul>
+        {
+          products.map((product) => (
+            <li>
+              {product.name} &mdash;{' '}
+              <a href={product.url} target="_blank" rel="noopener noreferrer">
+                {product.domain}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </LegalItem>
+  </LegalStack>
 </LegalLayout>

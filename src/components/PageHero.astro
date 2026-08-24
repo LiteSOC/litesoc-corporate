@@ -1,0 +1,41 @@
+---
+interface Props {
+  eyebrow: string;
+  heading: string;
+  lede?: string;
+  /** Constrains the heading measure; inner pages vary between 34rem and 36rem. */
+  headingWidth?: string;
+  ledeWidth?: string;
+}
+
+const {
+  eyebrow,
+  heading,
+  lede,
+  headingWidth = '36rem',
+  ledeWidth = '36rem',
+} = Astro.props;
+---
+
+<section
+  class="ruled border-b border-line pt-[clamp(3.25rem,6vw,5.5rem)] pb-[clamp(2.75rem,5vw,4.5rem)]"
+>
+  <div class="container-x">
+    <p class="eyebrow eyebrow-accent">{eyebrow}</p>
+    <h1
+      class="h-display mt-[1.375rem] text-ink"
+      style={`max-width:${headingWidth};font-size:clamp(2.125rem,1.5rem+2.6vw,3.625rem)`}
+      set:html={heading}
+    />
+    {
+      lede && (
+        <p
+          class="mt-6 text-lg leading-[1.6] text-slate"
+          style={`max-width:${ledeWidth}`}
+          set:html={lede}
+        />
+      )
+    }
+    <slot />
+  </div>
+</section>
