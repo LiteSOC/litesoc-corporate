@@ -38,7 +38,7 @@ export const company = {
   shortName: 'Litesoc',
   suffix: 'Sdn Bhd',
   url: 'https://litesoc.app',
-  email: 'hello@litesoc.app',
+  email: 'info@litesoc.app',
   /** Inbox for vulnerability reports; mirrored in /.well-known/security.txt. */
   securityEmail: 'security@litesoc.app',
   /** Inbox for applications and speculative introductions. */
