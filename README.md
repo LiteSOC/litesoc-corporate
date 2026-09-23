@@ -1,19 +1,20 @@
 # Litesoc Corporate Website
 
 The corporate website for **Litesoc Sdn Bhd**, the Malaysian technology company
-behind **LiteSOC** (cybersecurity) and **Digital Khairat** (digital khairat
-management).
+behind **LiteSOC** (cybersecurity), **Digital Khairat** (digital khairat
+management) and **Reeliva** (fishing logbook).
 
 Live at **https://litesoc.app**
 
 - Company: Litesoc Sdn Bhd — https://litesoc.app
 - Product: LiteSOC — https://litesoc.io
 - Product: Digital Khairat — https://digitalkhairat.my
+- Product: Reeliva — https://reeliva.app
 
 > This site represents the **parent company**. LiteSOC is one of its products,
 > not the company itself. Keep the capitalisation exact: `Litesoc Sdn Bhd`
 > (company), `LiteSOC` (cybersecurity product), `Digital Khairat` (khairat
-> management product).
+> management product), `Reeliva` (fishing logbook product).
 
 ## Stack
 
@@ -94,8 +95,9 @@ awards.
 The corporate mark is `public/images/litesoc-company-logo.png` (512 px master)
 with `litesoc-company-logo-144.png` used in the header and footer. The palette
 is derived from the mark: indigo `#191760` for the corporate layer, with
-`#1F5FD1` and `#0B7F41` reserved as product accents for LiteSOC and Digital
-Khairat respectively. Product accent colours are never used on corporate
+`#1F5FD1`, `#0B7F41` and `#024A78` reserved as product accents for LiteSOC,
+Digital Khairat and Reeliva respectively. Each accent is sampled from that
+product's own mark. Product accent colours are never used on corporate
 surfaces, so colour always indicates which entity is being referred to.
 
 ## GitHub Pages deployment
@@ -146,9 +148,9 @@ a repository-name base path.
   entries use the same trailing-slash form that GitHub Pages serves.
 - `Organization`, `WebSite` and `WebPage` JSON-LD on the homepage. The
   Organization graph carries the SSM registration number, D-U-N-S number and
-  registered address, and `owns` both products as `SoftwareApplication` nodes
-  published by the company — this is what tells search engines that LiteSOC and
-  Digital Khairat belong to Litesoc Sdn Bhd.
+  registered address, and `owns` every product as a `SoftwareApplication` node
+  published by the company — this is what tells search engines that LiteSOC,
+  Digital Khairat and Reeliva belong to Litesoc Sdn Bhd.
 - No social profile links are declared, because no official corporate accounts
   have been provided. Add them to `sameAs` in
   [`src/layouts/BaseLayout.astro`](src/layouts/BaseLayout.astro) when they exist.
@@ -158,7 +160,7 @@ a repository-name base path.
 `/privacy` and `/security` are intentionally narrow. They describe only this
 website — which sets no cookies, runs no analytics and collects nothing — and
 how to report a vulnerability. They are **not** product privacy policies;
-LiteSOC and Digital Khairat publish their own. Replace them with
+LiteSOC, Digital Khairat and Reeliva publish their own. Replace them with
 counsel-reviewed text before relying on them for anything beyond this site.
 
 ## Accessibility and performance

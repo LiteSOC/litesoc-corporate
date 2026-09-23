@@ -1,17 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
-import { accentClasses, company, products } from '../data/site';
+import { accentClasses, company, productCountWord, productNames, products } from '../data/site';
 ---
 
 <BaseLayout
   title="Products | Litesoc Sdn Bhd"
-  description="LiteSOC and Digital Khairat — the two platforms owned and developed by Litesoc Sdn Bhd."
+  description={`${productNames} — the ${productCountWord} platforms owned and developed by ${company.legalName}.`}
 >
   <PageHero
     eyebrow="Products"
-    heading={`Two platforms, both owned by ${company.legalName}.`}
-    lede={`Purpose-built platforms developed by ${company.legalName} to solve distinct operational and community challenges. Each is branded independently and serves a different sector.`}
+    heading={`${productCountWord.charAt(0).toUpperCase()}${productCountWord.slice(1)} platforms, all owned by ${company.legalName}.`}
+    lede={`Purpose-built platforms developed by ${company.legalName}, each solving a distinct operational, community or everyday problem. Each is branded independently and serves a different sector.`}
     ledeWidth="38rem"
   />
 
@@ -89,8 +89,8 @@ import { accentClasses, company, products } from '../data/site';
       <p
         class="mt-[clamp(2rem,3.5vw,3rem)] max-w-[44rem] border-l-2 border-line-strong pl-5 text-[0.96875rem] leading-[1.7] text-slate-400"
       >
-        Both products sit directly under {company.legalName}. {products[0].name} is a product of the
-        company, not the company itself, and {products[1].name} is not part of {products[0].name}.
+        Every product here sits directly under {company.legalName}. {products[0].name} is a product
+        of the company, not the company itself, and no product is part of another.
       </p>
     </div>
   </section>

@@ -21,7 +21,7 @@ export interface Product {
   /** Call-to-action label. */
   readonly cta: string;
   /** Accent key. Drives the product's colour treatment. */
-  readonly accent: 'sec' | 'comm';
+  readonly accent: 'sec' | 'comm' | 'reel';
   /** Product mark, served from /public/images. */
   readonly logo: string;
   /** Intrinsic size of `logo`, so the img can reserve its box. */
@@ -120,7 +120,42 @@ export const products: readonly Product[] = [
     builtFor:
       'Masjid, surau, associations and khairat organizations, their administrators and their members.',
   },
+  {
+    name: 'Reeliva',
+    category: 'Fishing Logbook',
+    kicker: 'Fishing Logbook App',
+    domain: 'reeliva.app',
+    url: 'https://reeliva.app',
+    description:
+      'A mobile fishing logbook that records catches and sessions, maps where they happened, and turns a season of entries into patterns worth acting on.',
+    cta: 'Explore Reeliva',
+    accent: 'reel',
+    logo: '/images/reeliva-product-logo.png',
+    logoWidth: 176,
+    logoHeight: 176,
+    highlights: ['Catch and session logging', 'Maps and location history', 'Catch pattern insights'],
+    builtFor:
+      'Recreational and competitive anglers who want a durable record of their fishing and a way to read what it adds up to.',
+  },
 ] as const;
+
+/**
+ * Product names as prose: "A, B and C".
+ *
+ * Every surface that names the product line reads from this, so adding a
+ * fourth product never leaves a sentence saying "two platforms" or indexing
+ * `products[1]` by hand.
+ */
+export const productNames = products
+  .map((product) => product.name)
+  .reduce(
+    (acc, name, i, all) => (i === 0 ? name : i === all.length - 1 ? `${acc} and ${name}` : `${acc}, ${name}`),
+    '',
+  );
+
+/** Product count spelled out, for sentences like "Three platforms, ...". */
+export const productCountWord =
+  (['zero', 'one', 'two', 'three', 'four', 'five', 'six'][products.length] ?? String(products.length));
 
 /**
  * Professional services delivered by Litesoc Sdn Bhd.
@@ -272,7 +307,7 @@ export const journey = [
     title: 'Products and technology services',
     body: 'Building digital products and delivering technology solutions for organizations across Malaysia.',
     short:
-      'Developing LiteSOC and Digital Khairat while delivering engineering, security and infrastructure work for clients.',
+      'Developing LiteSOC, Digital Khairat and Reeliva while delivering engineering, security and infrastructure work for clients.',
   },
 ] as const;
 
@@ -377,5 +412,14 @@ export const accentClasses = {
     leftRule: 'border-l-comm',
     hoverBorder: 'hover:border-comm',
     button: 'bg-comm hover:bg-comm-600 text-paper border-comm hover:border-comm-600',
+  },
+  reel: {
+    rule: 'bg-reel',
+    text: 'text-reel',
+    soft: 'bg-reel-soft',
+    topRule: 'border-t-reel',
+    leftRule: 'border-l-reel',
+    hoverBorder: 'hover:border-reel',
+    button: 'bg-reel hover:bg-reel-600 text-paper border-reel hover:border-reel-600',
   },
 } as const;

@@ -4,8 +4,9 @@
    Litesoc Sdn Bhd — corporate design tokens
 
    The corporate layer is deliberately neutral (navy / neutral gray / white).
-   Product accents (blue for LiteSOC, green for Digital Khairat) are applied
-   only to product surfaces, so colour always signals provenance.
+   Product accents (blue for LiteSOC, green for Digital Khairat, marine blue
+   for Reeliva) are applied only to product surfaces, so colour always signals
+   provenance.
 
    Type, spacing and the square-cornered button system follow the "Litesoc
    Corporate" design canvas: Archivo throughout, weight 800 for display
@@ -25,14 +26,20 @@
   --color-mist: #f5f6fa;
   --color-paper: #ffffff;
 
-  /* Product accents. Green is the mark's green; blue is deliberately
-     brighter than the corporate indigo so the two never read as the same. */
+  /* Product accents, each sampled from its own mark. Green is Digital
+     Khairat's green. LiteSOC's blue is deliberately brighter than the
+     corporate indigo so the two never read as the same, and Reeliva's marine
+     blue is deliberately darker and less saturated than LiteSOC's, so the
+     three blues on this site separate by weight rather than by hue alone. */
   --color-sec: #1f5fd1;
   --color-sec-600: #1a4fb0;
   --color-sec-soft: #eef3fd;
   --color-comm: #0b7f41;
   --color-comm-600: #096734;
   --color-comm-soft: #e9f4ee;
+  --color-reel: #024a78;
+  --color-reel-600: #013a5e;
+  --color-reel-soft: #e8f0f6;
 
   /* Type. One family, one file: Archivo variable, 400–800. */
   --font-sans: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',

@@ -1,6 +1,6 @@
 ---
 import Wordmark from './Wordmark.astro';
-import { company, legalNav, products, services } from '../data/site';
+import { company, legalNav, productNames, products, services } from '../data/site';
 
 const year = new Date().getFullYear();
 /* The footer lists the practice areas but points every one at the services
@@ -15,9 +15,7 @@ const servicesLinks = services.slice(0, 4);
       <div class="min-w-0 max-w-[26rem] flex-[0_1_17.5rem]">
         <Wordmark size={40} href={null} />
         <p class="mt-[1.375rem] max-w-[22rem] text-[0.9375rem] leading-relaxed text-slate">
-          A Malaysian technology company &mdash; the company behind {products[0].name} and {
-            products[1].name
-          }.
+          A Malaysian technology company &mdash; the company behind {productNames}.
         </p>
         <a
           href={`mailto:${company.email}`}

@@ -1,5 +1,5 @@
 ---
-import { accentClasses, company, products, services } from '../data/site';
+import { accentClasses, company, productNames, products, services } from '../data/site';
 ---
 
 <section class="border-b border-line bg-mist py-[clamp(4rem,7vw,6.5rem)]">
@@ -9,9 +9,9 @@ import { accentClasses, company, products, services } from '../data/site';
       <h2 class="h-section mt-5 text-ink">How {company.shortName} Is Organised</h2>
       <p class="mt-[1.125rem] text-[1.09375rem] leading-[1.62] text-slate">
         {company.legalName} works along two lines: platforms it owns and develops, and services it
-        delivers for clients. {products[0].name} and {products[1].name} are products of the company
-        &mdash; branded independently, serving different sectors, built to the same engineering
-        standards as our client work.
+        delivers for clients. {productNames} are products of the company &mdash; branded
+        independently, serving different sectors, built to the same engineering standards as our
+        client work.
       </p>
     </div>
 

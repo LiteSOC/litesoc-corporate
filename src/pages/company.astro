@@ -3,7 +3,7 @@ import { statSync } from 'node:fs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Arrow from '../components/Arrow.astro';
-import { company, journey, principles, products } from '../data/site';
+import { company, journey, principles, productNames } from '../data/site';
 
 const { path: profilePath, filename: profileFilename } = company.corporateProfile;
 const profileBytes = statSync(`public${profilePath}`).size;
@@ -48,9 +48,9 @@ const registeredDetails = [
           </p>
           <p>
             The company operates along two lines. It owns and develops its own platforms &mdash; {
-              products[0].name
-            } and {products[1].name} &mdash; and it delivers technology services for client
-            organizations. Both lines are held to the same engineering standards.
+              productNames
+            } &mdash; and it delivers technology services for client organizations. Both lines are
+            held to the same engineering standards.
           </p>
         </div>
       </div>
