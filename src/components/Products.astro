@@ -14,8 +14,14 @@ import { accentClasses, company, products } from '../data/site';
       </p>
     </div>
 
+    <!--
+      21rem, not 25rem: three cards plus two gaps must fit the 71.5rem content
+      box, so the minimum track has to stay under 22.5rem or the third product
+      wraps onto a row of its own. Still auto-fit, so the row drops to two and
+      then one as the viewport narrows.
+    -->
     <div
-      class="mt-[clamp(2.5rem,4vw,3.75rem)] grid grid-cols-[repeat(auto-fit,minmax(min(25rem,100%),1fr))] gap-[clamp(1.25rem,2.4vw,2rem)]"
+      class="mt-[clamp(2.5rem,4vw,3.75rem)] grid grid-cols-[repeat(auto-fit,minmax(min(21rem,100%),1fr))] gap-[clamp(1.25rem,2.4vw,2rem)]"
     >
       {
         products.map((product) => {
